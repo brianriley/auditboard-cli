@@ -1,21 +1,18 @@
-/**
- * 
- */
-
 module.exports = {
   command(args) {
 
     console.log("HELLO WORLD", args);
   },
   commandOptions: {
-    requiredParameters: ['modelName', 'secondThing'],
+    // requiredParameters: ['modelName', 'secondThing'],
     required: [
       {
         name: "modelName",
-        validateFunction() {
-
-        },
         message: 'you moron',
+      },
+      {
+        name: 'something',
+        message: 'you moron 2x',
       }
     ],
     // regexValidation: /model/g,
@@ -25,7 +22,7 @@ module.exports = {
       // '-modelName': String,
       '--option': Number,
       // '--install': Boolean,
-      // '-g': '--git',
+      '-o': '--option',
       // '-y': '--yes',
       // '-i': '--install',
     }

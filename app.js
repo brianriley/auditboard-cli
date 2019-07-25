@@ -11,8 +11,6 @@ const introMessage = figlet.textSync('AuditBoard', {
 });
 console.log(introMessage);
 
-// arg parsing
-
 function parseArgs(rawArgs, commandOptions) {
   const args = arg(commandOptions.args, { argv: rawArgs.slice(3) });
 
@@ -20,47 +18,78 @@ function parseArgs(rawArgs, commandOptions) {
   const result = {};
   const failures = [];
   let index = 0;
-  for (const key of Object.keys(args._)) {
-    result[commandOptions.requiredParameters[index]] = args._[key];
-    if (!result[commandOptions.requiredParameters[index]]) {
 
+  // if there are required parameters
+  if (commandOptions.required && commandOptions.required.length) {
+    // if there is no params provided
+    if (!args._.length) {
+      failures.push(...commandOptions.required.map(r => r.message));
     }
-    index++;
+
+    for (const key of Object.keys(commandOptions.required)) {
+      if (!args._[index]) {
+        failures.push(commandOptions.required[index].message);
+      }
+      result[commandOptions.required[index].name] = args._[index];
+  
+      index++;
+    }
+  }
+  
+  // parse optional args
+  for (const key of Object.keys(args)) {
+    if (key.startsWith('--')) {
+      result[key.replace('--', '')] = args[key];
+    }
   }
 
-  console.log(args);
-  console.log(result);
+  // throw errors
+  if (failures.length) {
+    console.error("Error(s) while executing command: \n", failures.join('\n'));
+    process.exit(1);
+  }
+
   return result;
-  /*
-  {
-    modelName: args._[0],
-    option: 123,
-  }*/
 }
   
-  function parseCommand(command) {
-    // some
-    const fileName = command.replace(':', '_');
-    const commandExists = fs.existsSync(`${WRITE_COMMAND_FILE_PATH}${fileName}.js`);
-    if (commandExists) {
-      const callback = require(`${WRITE_COMMAND_FILE_PATH}${fileName}`);
+function parseCommand(commandString) {
+  // some
+  const fileName = commandString.replace(':', '_');
+  const commandExists = fs.existsSync(`${WRITE_COMMAND_FILE_PATH}${fileName}.js`);
+  if (commandExists) {
+    /**
+     * {
+     *  command: function ...,
+     *  commandOptions: {
+     *    required: [
+     *      {
+     *        name: String argument name,
+     *        message: String Failure message
+     *      }
+     *    ],
+     *    // Optional params
+     *    args: {
+     *      '--option': Number,
+     *    }
+     *  }
+     * }
+     */
+    const commandInterface = require(`${WRITE_COMMAND_FILE_PATH}${fileName}`);
 
-      // validate
-      // look for command file
-      // return command function
-      return callback;
-    }
-    else {
-      throw new Error('dummy');
-    }
+    // validate
+    // look for command file
+    // return command function
+    return commandInterface;
   }
-  
+  else {
+    throw new Error('dummy');
+  }
+}
+
 module.exports = function cli(rawArgs) {
   const inputCommandString = rawArgs[2];
-  const { command, commandOptions, requiredParameters = [] } = parseCommand(inputCommandString);
+  const { command, commandOptions } = parseCommand(inputCommandString);
   const options = parseArgs(rawArgs, commandOptions);
-  console.log(options)
-  // const options = parseArgs(rawArgs, commandOptions.args);
-  
+
   command(options);
 };
