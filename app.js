@@ -39,10 +39,10 @@ function parseArgs(rawArgs) {
   function parseCommand(command) {
     // some
     const fileName = command.replace(':', '_');
-    const commandExists = fs.existsSync(`./commands/${fileName}.js`);
+    const commandExists = fs.existsSync(`${WRITE_COMMAND_FILE_PATH}${fileName}.js`);
     if (commandExists) {
-      const callback = require(`./commands/make_command`);
-      console.log("HOPEFULLY A FN", callback);
+	  const callback = require(`${WRITE_COMMAND_FILE_PATH}${fileName}`);
+
       // validate
       // look for command file
       // return command function
