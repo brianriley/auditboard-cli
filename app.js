@@ -91,7 +91,10 @@ function parseCommand(commandString) {
 }
 
 module.exports = async function cli(rawArgs) {
-	const inputCommandString = rawArgs[2];
+	let inputCommandString = rawArgs[2];
+  if (!inputCommandString) {
+    inputCommandString = 'help';
+  }
 	const { command, commandOptions } = parseCommand(inputCommandString);
 	const options = parseArgs(rawArgs, commandOptions);
 
