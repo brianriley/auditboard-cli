@@ -13,11 +13,29 @@ console.log(introMessage);
 
 // arg parsing
 
-function parseArgs(rawArgs, commandOptions, requiredParameters) {
+function parseArgs(rawArgs, commandOptions) {
   const args = arg(commandOptions.args, { argv: rawArgs.slice(3) });
 
-  
-  return args._;
+  // loop through args._ and extract non '--' things
+  const result = {};
+  const failures = [];
+  let index = 0;
+  for (const key of Object.keys(args._)) {
+    result[commandOptions.requiredParameters[index]] = args._[key];
+    if (!result[commandOptions.requiredParameters[index]]) {
+
+    }
+    index++;
+  }
+
+  console.log(args);
+  console.log(result);
+  return result;
+  /*
+  {
+    modelName: args._[0],
+    option: 123,
+  }*/
 }
   
   function parseCommand(command) {
