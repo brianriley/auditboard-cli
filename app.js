@@ -13,35 +13,19 @@ console.log(introMessage);
 
 // arg parsing
 
-function parseArgs(rawArgs) {
-  const args = arg(
-    {
-      // 'make:command': String,
-      '--yes': Boolean,
-      '--install': Boolean,
-      '-g': '--git',
-      '-y': '--yes',
-      '-i': '--install',
-    },
-    {
-      argv: rawArgs.slice(3),
-    }
-    );
-    
-    return {
-      commandName: args['make:command'],
-      git: args['--git'] || false,
-      template: args._[0],
-      runInstall: args['--install'] || false,
-    };
-  }
+function parseArgs(rawArgs, commandOptions, requiredParameters) {
+  const args = arg(commandOptions.args, { argv: rawArgs.slice(3) });
+
+  
+  return args._;
+}
   
   function parseCommand(command) {
     // some
     const fileName = command.replace(':', '_');
     const commandExists = fs.existsSync(`${WRITE_COMMAND_FILE_PATH}${fileName}.js`);
     if (commandExists) {
-	  const callback = require(`${WRITE_COMMAND_FILE_PATH}${fileName}`);
+      const callback = require(`${WRITE_COMMAND_FILE_PATH}${fileName}`);
 
       // validate
       // look for command file
@@ -53,15 +37,12 @@ function parseArgs(rawArgs) {
     }
   }
   
-  module.exports = function cli(args) {
-    const options = parseArgs(args);
-    const inputCommandString = args[2];
-    const command = parseCommand(inputCommandString);
-    command(options);
-    // console.log(command);
-    
-  // if (args['make:command'] && !args['make:command'].includes(':')) {
-  //   throw new Error("New commands must be prefixed with a namespace, eg 'auditboard make:command generate:model'");
-  // }
+module.exports = function cli(rawArgs) {
+  const inputCommandString = rawArgs[2];
+  const { command, commandOptions, requiredParameters = [] } = parseCommand(inputCommandString);
+  const options = parseArgs(rawArgs, commandOptions);
+  console.log(options)
+  // const options = parseArgs(rawArgs, commandOptions.args);
   
+  command(options);
 };
