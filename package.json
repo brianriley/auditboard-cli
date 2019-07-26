@@ -30,7 +30,8 @@
     "marked": "^0.7.0",
     "marked-terminal": "^3.2.0",
     "mkpath": "^1.0.0",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   },
   "bin": {
     "auditboard": "app.js"
