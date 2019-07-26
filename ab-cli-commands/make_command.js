@@ -70,7 +70,7 @@ module.exports = {
 
 		fs.writeFileSync(newCommandPath, newCommandTemplate);
 
-		return `Your new command: ${commandName} was successfully created. \n Edit ${newCommandPath} to customize.`;
+		return `Your new command: ${commandName} was successfully created. \n Edit ${newCommandPath} to customize it.`;
 	},
 	commandOptions: {
 		description: "Create commands that will get executed by the cli",
