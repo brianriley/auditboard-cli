@@ -1,6 +1,6 @@
 {
   "name": "auditboard-cli",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "description": "Changing the world one cli at a time",
   "main": "app.js",
   "scripts": {
