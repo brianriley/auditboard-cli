@@ -33,6 +33,7 @@ module.exports = {
 			list.push({
 				name: commandName,
 				description: commandOptions.description || 'No help provided.',
+				path: item,
 			});
 		}
 		list.sort(compare);
@@ -61,8 +62,11 @@ module.exports = {
 			if (lastNamespace !== namespace) {
 				listOutput += chalk.yellow(namespace) + '\n';
 			}
-			listOutput += '  ' + chalk.green(element.name.padEnd(maxCommandNameLength, ' '))
+			listOutput += '  ' + chalk.green(name.padEnd(maxCommandNameLength, ' '))
 				+ chalk.white(element.description) + '\n';
+			if (args.path && args.path === true) {
+				listOutput += ' '.repeat(maxCommandNameLength + 2) + chalk.italic.gray(element.path) + '\n';
+			}
 
 			lastNamespace = namespace;
 		}
@@ -71,6 +75,9 @@ module.exports = {
 	},
 	commandOptions: {
 		description: "Lists commands",
-		args:{}
+		args:{
+			"--path": Boolean,
+			"-p": "--path"
+		}
 	}
 };
