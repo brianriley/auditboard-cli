@@ -46,6 +46,9 @@ const helpContent = `
 # Great help should be written here.
 
 And you can use **markdown** as you please, even though you're a \`terminal\` lover.
+
+# Parameters:
+* -g, --global crates the command under your HOME folder, allowing it to be used anywhere (in your machine)
 `;
 
 module.exports = {
