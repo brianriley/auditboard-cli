@@ -25,6 +25,7 @@
   "homepage": "https://github.com/soxhub/auditboard-cli#readme",
   "dependencies": {
     "arg": "^4.1.1",
-    "figlet": "^1.2.3"
+    "figlet": "^1.2.3",
+    "mkpath": "^1.0.0"
   }
 }
