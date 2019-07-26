@@ -33,11 +33,11 @@ function parseArgs(rawArgs, commandOptions) {
 				failures.push(commandOptions.required[index].message);
 			}
 			result[commandOptions.required[index].name] = args._[index];
-	
+
 			index++;
 		}
 	}
-	
+
 	// parse optional args
 	for (const key of Object.keys(args)) {
 		if (key.startsWith('--')) {
@@ -53,7 +53,7 @@ function parseArgs(rawArgs, commandOptions) {
 
 	return result;
 }
-	
+
 function parseCommand(commandString) {
 	// some
 	const fileName = commandString.replace(':', '_');
