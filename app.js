@@ -4,6 +4,7 @@ const figlet = require('figlet');
 const arg = require('arg');
 const commandHelper = require('./utils/command');
 const path = require('path');
+const chalk = require('chalk');
 
 const introMessage = figlet.textSync('AuditBoard', {
 	font: 'Slant',
@@ -22,14 +23,15 @@ function parseArgs(rawArgs, commandOptions) {
 
 	// if there are required parameters
 	if (commandOptions.required && commandOptions.required.length) {
-		// if there is no params provided
-		if (!args._.length) {
+		// if there is no params provided and there are non required
+		if (!args._.length && commandOptions.required && !commandOptions.required.length) {
 			failures.push(...commandOptions.required.map(r => r.message));
 		}
 
 		for (const key of Object.keys(commandOptions.required)) {
-			if (!args._[index]) {
-				failures.push(commandOptions.required[index].message);
+			// if there are required params but aren't provided
+			if (!args._[index] && commandOptions.required[index]) {
+				failures.push(commandOptions.required[index].message || `Require parameter missing: ${commandOptions.required[index].name}`);
 			}
 			result[commandOptions.required[index].name] = args._[index];
 
@@ -46,7 +48,11 @@ function parseArgs(rawArgs, commandOptions) {
 
 	// throw errors
 	if (failures.length) {
-		console.error("Error(s) while executing command: \n", failures.join('\n'));
+		console.log(chalk.red(`There were ${failures.length} error${failures.length === 1 ? '' : 's'} while running your command...`));
+		for (let i = 0; i < failures.length ; i++) {
+			console.log(chalk.black.bgWhite.bold(`${i+1})`), chalk.red(failures[i]));
+		}
+
 		process.exit(1);
 	}
 
@@ -65,19 +71,26 @@ function parseCommand(commandString) {
 		}
 	}
 
-	throw new Error('Command not found will handle better later');
+	console.log(chalk.red("Error: command ") + chalk.bold(commandString) + chalk.red(" not found."));
+	process.exit(1);
 }
 
 async function cli(rawArgs) {
-  let inputCommandString = rawArgs[2];
-  if (!inputCommandString) {
-    inputCommandString = 'list';
-  }
+	let inputCommandString = rawArgs[2];
+	if (!inputCommandString) {
+		inputCommandString = 'list';
+	}
 	const { command, commandOptions } = parseCommand(inputCommandString);
 	const options = parseArgs(rawArgs, commandOptions);
 
 	try {
-		await command(options);
+		let successMessage = await command(options);
+		// if not list or test then we want to log something 
+		if (!['test', 'list', 'help'].includes(inputCommandString)) {
+			// default message
+			successMessage = successMessage || `Your command ${inputCommandString} ran successfully!`;
+			console.log(chalk.green(successMessage));
+		}
 	}
 	catch (err) {
 		// do something else with error handling
