@@ -20,6 +20,14 @@ function compare( a, b ) {
 	return 0;
 }
 
+const helpContent = `
+This command displays a list of the available commands.
+
+# Parameters:
+* -p, --path Displays the absolute filepath to the corresponding file, for easy editing.
+
+`;
+
 module.exports = {
 	command(args) {
 		const list = [];
@@ -74,6 +82,7 @@ module.exports = {
 		console.log(listOutput);
 	},
 	commandOptions: {
+		help: helpContent,
 		description: "Lists commands",
 		args:{
 			"--path": Boolean,
