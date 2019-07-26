@@ -42,6 +42,11 @@ const newCommandTemplate =
 		}
 	}
 };`;
+const helpContent = `
+# Great help should be written here.
+
+And you can use **markdown** as you please, even though you're a \`terminal\` lover.
+`;
 
 module.exports = {
 	/**
@@ -69,6 +74,7 @@ module.exports = {
 	},
 	commandOptions: {
 		description: "Create commands that will get executed by the cli",
+		help: helpContent,
 		required: [
 			{
 				name: "commandName", // <-- this value will be users
