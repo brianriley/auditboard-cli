@@ -1,13 +1,13 @@
 {
   "name": "auditboard-cli",
-  "version": "0.0.1",
+  "version": "0.0.3-beta",
   "description": "Changing the world one cli at a time",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "10.15.0"
+    "node": ">=10.0.0"
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,9 @@
   "homepage": "https://github.com/soxhub/auditboard-cli#readme",
   "dependencies": {
     "arg": "^4.1.1",
-    "figlet": "^1.2.3",
-    "mkpath": "^1.0.0",
     "chalk": "^2.4.2",
-    "lodash": "4.17.5"
+    "figlet": "^1.2.3",
+    "mkpath": "^1.0.0"
   },
   "bin": {
     "auditboard": "app.js"

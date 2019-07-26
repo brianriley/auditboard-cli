@@ -22,13 +22,21 @@ const isFolder = (folderName) => {
 }
 
 const isFile = (fileName) => {
-  return fs.lstatSync(fileName).isFile()
+	try {
+		const lstat = fs.lstatSync(fileName);
+		return lstat && lstat.isFile();
+	}
+	catch (err) {
+		if (err.code === 'ENOENT') {
+			return false;
+		}
+		throw err;
+	}
 }
 
  
 module.exports = {
 	getCommandAbsolutePaths() {
-
 		let commandAbsolutePaths = [];
 
 		// get all command paths

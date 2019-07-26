@@ -86,5 +86,4 @@ async function cli(rawArgs) {
 	}
 };
 
-const [,, ...rawArgs] = process.argv
-cli(rawArgs);
+cli(process.argv);
