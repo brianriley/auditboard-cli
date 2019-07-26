@@ -34,7 +34,7 @@ const isFile = (fileName) => {
 	}
 }
 
- 
+
 module.exports = {
 	getCommandAbsolutePaths() {
 		let commandAbsolutePaths = [];

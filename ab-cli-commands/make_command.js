@@ -46,6 +46,9 @@ const helpContent = `
 # Great help should be written here.
 
 And you can use **markdown** as you please, even though you're a \`terminal\` lover.
+
+# Parameters:
+* -g, --global crates the command under your HOME folder, allowing it to be used anywhere (in your machine)
 `;
 
 module.exports = {
@@ -70,7 +73,7 @@ module.exports = {
 
 		fs.writeFileSync(newCommandPath, newCommandTemplate);
 
-		return `Your new command: ${commandName} was successfully created. \n Edit ${newCommandPath} to customize.`;
+		return `Your new command: ${commandName} was successfully created. \n Edit ${newCommandPath} to customize it.`;
 	},
 	commandOptions: {
 		description: "Create commands that will get executed by the cli",

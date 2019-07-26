@@ -39,7 +39,7 @@ module.exports = {
 	},
 	commandOptions: {
 		help: "This help string supports markdown!",
-		description: "This is your command description",
+		description: "This is your command short description",
 		required: [
 			/**
 			 * This is where you put required params
@@ -74,12 +74,12 @@ module.exports = {
       return "Return a message and the cli will log it!";
     },
   ```
-This is the function that get's executed. If you wanta custom message to display on command completion return a string
+This is the function that gets executed. If you want a custom message to display on command completion return a string
 
 ### commandOptions
 
 - `help`
-  - The message that get's displayed when a user runs `help`(supports markdown):
+  - The message that gets displayed when a user runs `help`(supports markdown):
   ```
   $ auditboard help <your awesome command>
   ```
@@ -109,7 +109,7 @@ This is the function that get's executed. If you wanta custom message to display
 ### Argument injection
 Arguments (both optional and required) are injected into the command function. Keyed by name (for optional parms we remove `--`)
 
-Our make command for example has required and optional commands  
+Our make command, for example, has required and optional arguments
 Required:
 ```js
 {

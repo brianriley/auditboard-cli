@@ -38,7 +38,7 @@ To view a list of available commands, you may use the "list" command:
 
 auditboard list
 
-And other great command that you'll create!
+And other great commands that you'll create!
 		`,
 		description: "Displays help for a command",
 		args:{}
