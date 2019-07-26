@@ -50,6 +50,7 @@ module.exports = {
 		console.log(listOutput);
 	},
 	commandOptions: {
+		description: "Lists commands",
 		args:{}
 	}
 };

@@ -14,6 +14,7 @@ auditboard list
 		chalk.hex('#3156F3')(help, args);
 	},
 	commandOptions: {
+		description: "Displays help for a command",
 		args:{}
 	}
 };
