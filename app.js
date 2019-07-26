@@ -92,8 +92,8 @@ function parseCommand(commandString) {
 	}
 }
 
-module.exports = async function cli(rawArgs) {
-	let inputCommandString = rawArgs[2];
+async function cli(rawArgs) {
+  let inputCommandString = rawArgs[2];
   if (!inputCommandString) {
     inputCommandString = 'list';
   }
@@ -109,3 +109,6 @@ module.exports = async function cli(rawArgs) {
 		process.exit(1);
 	}
 };
+
+const [,, ...rawArgs] = process.argv
+cli(rawArgs);
