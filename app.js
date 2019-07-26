@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// so it works for TS projects
+require('ts-node/register/transpile-only')
 
 const figlet = require('figlet');
 const arg = require('arg');
