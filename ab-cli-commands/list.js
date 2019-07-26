@@ -2,6 +2,24 @@ const chalk = require('chalk');
 const commandHelper = require('../utils/command');
 const path = require('path');
 
+function compare( a, b ) {
+	if ( a.name.indexOf(':') > -1 || b.name.indexOf(':') > -1) {
+		if (a.name.indexOf(':') > -1 && b.name.indexOf(':') === -1) {
+			return 1;
+		}
+		if (a.name.indexOf(':') === -1 && b.name.indexOf(':') > -1) {
+			return -1;
+		}
+	}
+	if ( a.name < b.name ) {
+		return -1;
+	}
+	if ( a.name > b.name ) {
+		return 1;
+	}
+	return 0;
+}
+
 module.exports = {
 	command(args) {
 		const list = [];
@@ -17,6 +35,7 @@ module.exports = {
 				description: commandOptions.description || 'No help provided.',
 			});
 		}
+		list.sort(compare);
 		console.log(chalk.yellow('List of available commands:'));
 
 		let maxCommandNameLength = 0;

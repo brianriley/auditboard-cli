@@ -1,6 +1,6 @@
 {
   "name": "auditboard-cli",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Changing the world one cli at a time",
   "main": "app.js",
   "scripts": {
@@ -30,7 +30,8 @@
     "marked": "^0.7.0",
     "marked-terminal": "^3.2.0",
     "mkpath": "^1.0.0",
-    "ts-node": "^8.3.0"
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   },
   "bin": {
     "auditboard": "app.js"
