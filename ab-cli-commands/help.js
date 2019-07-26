@@ -40,6 +40,7 @@ auditboard list
 
 And other great command that you'll create!
 		`,
+		description: "Displays help for a command",
 		args:{}
 	}
 };
