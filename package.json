@@ -26,7 +26,8 @@
   "dependencies": {
     "arg": "^4.1.1",
     "figlet": "^1.2.3",
-    "mkpath": "^1.0.0"
+    "mkpath": "^1.0.0",
+    "chalk": "^2.4.2"
   },
   "bin": {
     "auditboard": "app.js"

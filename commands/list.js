@@ -1,0 +1,55 @@
+const chalk = require('chalk');
+const fs = require('fs');
+
+module.exports = {
+	command(args) {
+		const list = [];
+		const items = fs.readdirSync(__dirname);
+
+		for (let i=0; i< items.length; i++) {
+			const item = items[i];
+			const commandName = item.replace('_', ':').replace('.js', '');
+			const moduleName = __dirname + '/' + item.replace('.js', '');
+			const { commandOptions } = require(moduleName);
+
+			list.push({
+				name: commandName,
+				description: commandOptions.description || 'No help provided.',
+			});
+		}
+		console.log(chalk.yellow('List of available commands:'));
+
+		let maxCommandNameLength = 0;
+		list.forEach((element) => {
+			if (maxCommandNameLength < element.name.length) {
+				maxCommandNameLength = element.name.length;
+			}
+		});
+		maxCommandNameLength += 3;
+
+		let listOutput = '\n';
+		let lastNamespace = '';
+		let namespace = '';
+		for (element of list) {
+			if (element.name.indexOf(':') > -1) {
+				[ namespace, name ] = element.name.split(':');
+			} else {
+				namespace = '';
+				name = element.name;
+			}
+
+			if (lastNamespace !== namespace) {
+				listOutput += chalk.yellow(namespace) + '\n';
+			}
+			listOutput += '  ' + chalk.green(element.name.padEnd(maxCommandNameLength, ' '))
+				+ chalk.white(element.description) + '\n';
+
+			lastNamespace = namespace;
+		}
+
+		console.log(listOutput);
+	},
+	commandOptions: {
+		args:{}
+	}
+};
