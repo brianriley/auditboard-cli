@@ -6,7 +6,7 @@
  */
 
 const fs = require('fs');
-const { APP_COMMAND_FILE_PATH, LOCAL_FILE_PATH } = require('../config');
+const { USER_FILE_PATH, APP_COMMAND_FILE_PATH, LOCAL_FILE_PATH } = require('../config');
 const path = require('path');
 
 const isFolder = (folderName) => {
@@ -40,7 +40,7 @@ module.exports = {
 		let commandAbsolutePaths = [];
 
 		// get all command paths
-		for (const folderPath of [APP_COMMAND_FILE_PATH, LOCAL_FILE_PATH]) {
+		for (const folderPath of [USER_FILE_PATH, APP_COMMAND_FILE_PATH, LOCAL_FILE_PATH]) {
 			if (isFolder(folderPath)) {
 				for (const fileName of fs.readdirSync(folderPath)) {
 					// it's a real file
