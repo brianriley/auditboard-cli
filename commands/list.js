@@ -1,15 +1,15 @@
 const chalk = require('chalk');
-const fs = require('fs');
+const commandHelper = require('../utils/command');
+const path = require('path');
 
 module.exports = {
 	command(args) {
 		const list = [];
-		const items = fs.readdirSync(__dirname);
-
-		for (let i=0; i< items.length; i++) {
-			const item = items[i];
-			const commandName = item.replace('_', ':').replace('.js', '');
-			const moduleName = __dirname + '/' + item.replace('.js', '');
+		const commandPaths = commandHelper.getCommandAbsolutePaths();
+		
+		for (const item of commandPaths) {
+			const commandName = path.basename(item).replace('_', ':').replace('.js', '');
+			const moduleName = path.normalize(item).replace('.js', '');
 			const { commandOptions } = require(moduleName);
 
 			list.push({

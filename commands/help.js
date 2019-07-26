@@ -11,7 +11,7 @@ To view a list of available commands, you may use the "list" command:
 auditboard list
 
 		`;
-		console.log(chalk.hex('#3156F3')(help, args));
+		chalk.hex('#3156F3')(help, args);
 	},
 	commandOptions: {
 		args:{}

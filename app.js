@@ -2,9 +2,8 @@
 
 const figlet = require('figlet');
 const arg = require('arg');
-const fs = require('fs');
-const { APP_COMMAND_FILE_PATH } = require('./config');
-const LOCAL_COMMAND_PATH = './commands';
+const commandHelper = require('./utils/command');
+const path = require('path');
 
 const introMessage = figlet.textSync('AuditBoard', {
 	font: 'Slant',
@@ -55,41 +54,18 @@ function parseArgs(rawArgs, commandOptions) {
 }
 
 function parseCommand(commandString) {
-	// some
-	const fileName = commandString.replace(':', '_');
-	// stopgap for running make command
-	console.log("LOCALFILE PATH", `${LOCAL_COMMAND_PATH}/${fileName}.js`);
-	const commandExists = fs.existsSync(`${LOCAL_COMMAND_PATH}/${fileName}.js`);
-	console.log("commandExists")
+	const commandPaths = commandHelper.getCommandAbsolutePaths();
 
-	if (commandExists) {
-		/**
-		 * {
-		 *  command: function ...,
-		 *  commandOptions: {
-		 *    required: [
-		 *      {
-		 *        name: String argument name,
-		 *        message: String Failure message
-		 *      }
-		 *    ],
-		 *    // Optional params
-		 *    args: {
-		 *      '--option': Number,
-		 *    }
-		 *  }
-		 * }
-		 */
-		const commandInterface = require(`${LOCAL_COMMAND_PATH}/${fileName}`);
+	for (const item of commandPaths) {
+		const commandName = path.basename(item).replace('_', ':').replace('.js', '');
+		const moduleName = path.normalize(item).replace('.js', '');
+		if (commandString === commandName) {
+			// found the command
+			return require(moduleName);
+		}
+	}
 
-		// validate
-		// look for command file
-		// return command function
-		return commandInterface;
-	}
-	else {
-		throw new Error('dummy');
-	}
+	throw new Error('Command not found will handle better later');
 }
 
 async function cli(rawArgs) {
