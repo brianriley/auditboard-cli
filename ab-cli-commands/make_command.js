@@ -61,11 +61,11 @@ module.exports = {
 		const folderPath = args.global ? USER_FILE_PATH : APP_COMMAND_FILE_PATH;
 		if (!fs.existsSync(folderPath)) {
 			// write folder
-			await makePathAsync(folderPath, 0700);
+			await makePathAsync(folderPath, parseInt("0700", 8));
 		}
 
 		const commandName = args.commandName;
-		const commandFileName = commandName.replace(':', '_') + '.js'
+		const commandFileName = commandName.replace(/\:/g, '_') + '.js'
 		const newCommandPath = `${folderPath}/${commandFileName}`;
 
 		fs.writeFileSync(newCommandPath, newCommandTemplate);

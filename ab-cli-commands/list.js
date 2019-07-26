@@ -26,7 +26,7 @@ module.exports = {
 		const commandPaths = commandHelper.getCommandAbsolutePaths();
 		
 		for (const item of commandPaths) {
-			const commandName = path.basename(item).replace('_', ':').replace('.js', '');
+			const commandName = path.basename(item).replace(/_/g, ':').replace('.js', '');
 			const moduleName = path.normalize(item).replace('.js', '');
 			const { commandOptions } = require(moduleName);
 
@@ -45,12 +45,13 @@ module.exports = {
 			}
 		});
 		maxCommandNameLength += 3;
-
+		
 		let listOutput = '\n';
 		let lastNamespace = '';
 		let namespace = '';
-		for (element of list) {
-			if (element.name.indexOf(':') > -1) {
+		for (let element of list) {
+			let name;
+			if (element.name.includes(':')) {
 				[ namespace, name ] = element.name.split(':');
 			} else {
 				namespace = '';

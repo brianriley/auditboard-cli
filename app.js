@@ -65,7 +65,7 @@ function parseCommand(commandString) {
 	const commandPaths = commandHelper.getCommandAbsolutePaths();
 
 	for (const item of commandPaths) {
-		const commandName = path.basename(item).replace('_', ':').replace('.js', '');
+		const commandName = path.basename(item).replace(/\_/g, ':').replace('.js', '');
 		const moduleName = path.normalize(item).replace('.js', '');
 		if (commandString === commandName) {
 			// found the command
