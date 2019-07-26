@@ -1,9 +1,19 @@
-module.exports = {
-  command(args) {
+const chalk = require('chalk');
 
-    console.log("HELP", args);
-  },
-  commandOptions: {
-    args:{}
-  }
+module.exports = {
+	command(args) {
+		const help = `
+Auditboard CLI
+
+Use this tool to create commands that will assist you while you build your application.
+To view a list of available commands, you may use the "list" command:
+
+auditboard list
+
+		`;
+		console.log(chalk.hex('#3156F3')(help, args));
+	},
+	commandOptions: {
+		args:{}
+	}
 };
