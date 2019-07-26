@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const figlet = require('figlet');
 const arg = require('arg');
 const fs = require('fs');
