@@ -18,7 +18,7 @@
     "auditboard"
   ],
   "author": "Walt Z, Gal N, Motta",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/soxhub/auditboard-cli/issues"
   },
