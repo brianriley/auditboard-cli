@@ -101,4 +101,12 @@ async function cli(rawArgs) {
 	}
 };
 
-cli(process.argv);
+(async () => {
+	try {
+		await cli(process.argv);
+	}
+	catch (err) {
+		console.err(err);
+		process.exit(1);
+	}
+})();
