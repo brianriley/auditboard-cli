@@ -60,18 +60,21 @@ module.exports = {
 		let namespace = '';
 		for (let element of list) {
 			let name;
+			let optionalName;
 			if (element.name.includes(':')) {
-				[ namespace, name ] = element.name.split(':');
+				// we can only go 3 layers deep with this implimentation
+				[ namespace, name, optionalName = null ] = element.name.split(':');
 			} else {
 				namespace = '';
 				name = element.name;
 			}
 
 			if (lastNamespace !== namespace) {
-				listOutput += chalk.yellow(namespace) + '\n';
+				listOutput += chalk.yellow(namespace) + ':\n';
 			}
+			name = optionalName ? name + ":" + optionalName : name;
 			listOutput += '  ' + chalk.green(name.padEnd(maxCommandNameLength, ' '))
-				+ chalk.white(element.description) + '\n';
+			+ chalk.white(element.description) + '\n';
 			if (args.path && args.path === true) {
 				listOutput += ' '.repeat(maxCommandNameLength + 2) + chalk.italic.gray(element.path) + '\n';
 			}
