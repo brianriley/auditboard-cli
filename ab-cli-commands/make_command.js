@@ -3,6 +3,8 @@ const mkpath = require('mkpath');
 const { promisify } = require('util');
 const makePathAsync = promisify(mkpath);
 const { APP_COMMAND_FILE_PATH, USER_FILE_PATH } = require('../config');
+const isGlobalNpmInstall = require('is-installed-globally');
+
 
 const newCommandTemplate =
 `module.exports = {
@@ -60,8 +62,8 @@ module.exports = {
 	 * }
 	 */
 	async command(args) {
-		// check if file path exists
-		const folderPath = args.global ? USER_FILE_PATH : APP_COMMAND_FILE_PATH;
+		// if installed globally or global flag passed install in USER_FILE_PATH
+		const folderPath = (isGlobalNpmInstall || args.global) ? USER_FILE_PATH : APP_COMMAND_FILE_PATH;
 		if (!fs.existsSync(folderPath)) {
 			// write folder
 			await makePathAsync(folderPath, parseInt("0700", 8));
